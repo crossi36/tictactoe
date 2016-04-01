@@ -10,7 +10,7 @@ const (
 	dimension          = 3
 )
 
-// Game represents a game of Tic-Tac-Toe. Obtain it by invoking the fatory method
+// Game represents a game of Tic-Tac-Toe. Obtain it by invoking the factory function
 // NewGame().
 type Game struct {
 	board         [][]int
@@ -85,7 +85,7 @@ func checkGameStatus(g *Game, x, y int) {
 	switch {
 	case g.moveCount < 4:
 		return
-	case g.moveCount >= 8:
+	case g.moveCount > 8:
 		g.gameOver = true
 	}
 
