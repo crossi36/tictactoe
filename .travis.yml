@@ -1,6 +1,1 @@
 language: go
-
-go:
-  - tip
-
-gobuild_args: -bench=.
