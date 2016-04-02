@@ -52,3 +52,7 @@ default:
 ```
 
 A basic implementation of this usage can be found in the example directory.
+
+## License
+
+Distributed under the MIT license. See the [LICENSE.md](https://github.com/crossi36/tictactoe/blob/master/LICENSE.md) file for details.
