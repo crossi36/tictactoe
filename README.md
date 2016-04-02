@@ -53,6 +53,13 @@ default:
 
 A basic implementation of this usage can be found in the example directory.
 
+## Benchmark
+```
+BenchmarkString-4        1000000              1758 ns/op
+BenchmarkNewGame-4     100000000              13.6 ns/op
+BenchmarkPlay-4         10000000               127 ns/op
+```
+
 ## License
 
 Distributed under the MIT license. See the [LICENSE.md](https://github.com/crossi36/tictactoe/blob/master/LICENSE.md) file for details.
