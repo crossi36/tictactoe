@@ -32,9 +32,10 @@ func main() {
 		}
 	}
 	fmt.Println(game)
-	if winner := game.Winner(); winner == -1 {
+	switch game.Winner() {
+	case -1:
 		fmt.Println("The game resulted in a draw!")
-	} else {
+	default:
 		fmt.Println("Player", game.Winner()+1, "won!")
 	}
 }
