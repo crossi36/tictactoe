@@ -58,7 +58,7 @@ func (g Game) Over() bool {
 	return g.gameOver
 }
 
-// Play takes x and y coordinates (each between 0 and 2) and marks it for the
+// Play takes x and y coordinates (each between 0 and 2) and marks the field for the
 // current player. If the coordinates are out of bounds or the field is already
 // marked it will return an error.
 func (g *Game) Play(x, y int) error {
