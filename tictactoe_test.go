@@ -235,6 +235,18 @@ func TestGameEnded(t *testing.T) {
 	}
 }
 
+func TestFieldValue(t *testing.T) {
+	game := NewGame()
+	if game.FieldValue(1, 0) != " " {
+		t.Error("FieldValue() returns player token for empty field")
+	}
+
+	game.Play(1, 0)
+	if v := game.FieldValue(1, 0); v != "X" {
+		t.Errorf("FieldValue() returns %s, expected: X", v)
+	}
+}
+
 /* Helper functions for easier checking/copying of slice of slices */
 
 func testEqualitySlicesOfSliceOfInt(a, b [][]int) bool {

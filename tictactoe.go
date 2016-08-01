@@ -120,6 +120,12 @@ func (g *Game) checkStatus(x, y int) {
 	}
 }
 
+// FieldValue returns the token of the user occupying the field or empty string
+// if it is empty.
+func (g Game) FieldValue(x, y int) string {
+	return mapValue(g.board[y][x])
+}
+
 /* Helper functions */
 
 func mapValue(x int) string {
