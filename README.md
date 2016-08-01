@@ -54,9 +54,9 @@ A basic implementation of this usage can be found in the example directory.
 
 ## Benchmark
 ```
-BenchmarkString-4        1000000              1758 ns/op
-BenchmarkNewGame-4     100000000              13.6 ns/op
-BenchmarkPlay-4         10000000               127 ns/op
+BenchmarkString-4         500000              2489 ns/op
+BenchmarkNewGame-4       5000000               386 ns/op
+BenchmarkPlay-4         10000000               162 ns/op
 ```
 
 ## License
