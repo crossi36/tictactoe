@@ -99,7 +99,7 @@ func (g *Game) Play(x, y int) error {
 
 func (g *Game) checkStatus(x, y int) {
 	switch {
-	case g.moveCount < dimension+1:
+	case g.moveCount < dimension+2:
 		return
 	case g.moveCount == dimension*dimension:
 		g.gameOver = true
