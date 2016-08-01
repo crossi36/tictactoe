@@ -3,14 +3,14 @@ package tictactoe
 import "testing"
 
 func TestString(t *testing.T) {
-	want := "   |   |  \n---+---+---\n   |   |  \n---+---+---\n   |   |  \n"
+	want := "   |   |   \n---+---+---\n   |   |   \n---+---+---\n   |   |   \n"
 	game := NewGame()
 	s := game.String()
 	if s != want {
 		t.Errorf("String() returns:\n%s\nwant:\n%s", s, want)
 	}
 
-	want = "   | O |  \n---+---+---\n   | X |  \n---+---+---\n   |   |  \n"
+	want = "   | O |   \n---+---+---\n   | X |   \n---+---+---\n   |   |   \n"
 	game = NewGame()
 	game.Play(1, 1)
 	game.Play(1, 0)

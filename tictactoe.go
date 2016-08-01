@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	standardFieldValue = 4
 	dimension          = 3
+	standardFieldValue = dimension + 1
 )
 
 // Game represents a game of Tic-Tac-Toe. Obtain it by invoking the factory function
@@ -21,20 +21,36 @@ type Game struct {
 }
 
 func (g Game) String() string {
-	result := bytes.NewBufferString(fmt.Sprintf(" %s | %s | %s\n", mapValue(g.board[0][0]), mapValue(g.board[0][1]), mapValue(g.board[0][2])))
-	result.WriteString("---+---+---\n")
-	result.WriteString(fmt.Sprintf(" %s | %s | %s\n", mapValue(g.board[1][0]), mapValue(g.board[1][1]), mapValue(g.board[1][2])))
-	result.WriteString("---+---+---\n")
-	result.WriteString(fmt.Sprintf(" %s | %s | %s\n", mapValue(g.board[2][0]), mapValue(g.board[2][1]), mapValue(g.board[2][2])))
+	var result bytes.Buffer
+	for i := 0; i < dimension; i++ {
+		for j := 0; j < dimension; j++ {
+			result.WriteString(fmt.Sprintf(" %s ", mapValue(g.board[i][j])))
+			if j < dimension-1 {
+				result.WriteString("|")
+			}
+		}
+		result.WriteString("\n")
+		if i < dimension-1 {
+			for j := 0; j < dimension; j++ {
+				result.WriteString("---")
+				if j < dimension-1 {
+					result.WriteString("+")
+				}
+			}
+			result.WriteString("\n")
+		}
+	}
 	return result.String()
 }
 
 // NewGame is a factory function for a new game of Tic-Tac-Toe.
 func NewGame() *Game {
-	b := [][]int{
-		{standardFieldValue, standardFieldValue, standardFieldValue},
-		{standardFieldValue, standardFieldValue, standardFieldValue},
-		{standardFieldValue, standardFieldValue, standardFieldValue},
+	b := make([][]int, dimension)
+	for i := 0; i < dimension; i++ {
+		b[i] = make([]int, dimension)
+		for j := 0; j < dimension; j++ {
+			b[i][j] = standardFieldValue
+		}
 	}
 	return &Game{board: b}
 }
@@ -58,14 +74,14 @@ func (g Game) Over() bool {
 	return g.gameOver
 }
 
-// Play takes x and y coordinates (each between 0 and 2) and marks the field for the
+// Play takes x and y coordinates (each between 0 and dimension-1 (which is 2)) and marks the field for the
 // current player. If the coordinates are out of bounds or the field is already
 // marked it will return an error.
 func (g *Game) Play(x, y int) error {
 	switch {
 	case g.gameOver:
 		return fmt.Errorf("Game is already over")
-	case x < 0 || x > 2 || y < 0 || y > 2:
+	case x < 0 || x > dimension-1 || y < 0 || y > dimension-1:
 		return fmt.Errorf("Invalid coordinates")
 	case g.board[y][x] != standardFieldValue:
 		return fmt.Errorf("Field already marked")
@@ -74,18 +90,18 @@ func (g *Game) Play(x, y int) error {
 	g.board[y][x] = g.currentPlayer
 	g.moveCount++
 
-	checkGameStatus(g, x, y)
+	g.checkStatus(x, y)
 	if !g.gameOver {
 		g.currentPlayer = (g.currentPlayer + 1) % 2
 	}
 	return nil
 }
 
-func checkGameStatus(g *Game, x, y int) {
+func (g *Game) checkStatus(x, y int) {
 	switch {
-	case g.moveCount < 4:
+	case g.moveCount < dimension+1:
 		return
-	case g.moveCount > 8:
+	case g.moveCount == dimension*dimension:
 		g.gameOver = true
 	}
 
@@ -107,10 +123,10 @@ func checkGameStatus(g *Game, x, y int) {
 /* Helper functions */
 
 func mapValue(x int) string {
-	switch {
-	case x == 0:
+	switch x {
+	case 0:
 		return "X"
-	case x == 1:
+	case 1:
 		return "O"
 	default:
 		return " "
