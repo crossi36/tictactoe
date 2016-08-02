@@ -33,7 +33,7 @@ func main() {
 	}
 	fmt.Println(game)
 	switch game.Winner() {
-	case -1:
+	case tictactoe.Tie:
 		fmt.Println("The game resulted in a draw!")
 	default:
 		fmt.Println("Player", game.Winner()+1, "won!")

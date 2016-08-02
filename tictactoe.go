@@ -10,6 +10,13 @@ const (
 	standardFieldValue = dimension + 1
 )
 
+// Possible return values for CurrentPlayer() and Winner().
+const (
+	Tie = iota - 1
+	Player1
+	Player2
+)
+
 // Game represents a game of Tic-Tac-Toe. Obtain it by invoking the factory function
 // NewGame().
 type Game struct {
@@ -55,16 +62,16 @@ func NewGame() *Game {
 	return &Game{board: b}
 }
 
-// CurrentPlayer returns the player id (0 or 1) of the player who has to play next.
+// CurrentPlayer returns Player1 or Player2, depending on who has to play next.
 func (g Game) CurrentPlayer() int {
 	return g.currentPlayer
 }
 
-// Winner returns the player id (0 or 1) of the player who has won or -1 if there
+// Winner returns Player 1 or Player 2 depending on who has won or Tie if there
 // is no winner (yet).
 func (g Game) Winner() int {
 	if !g.hasWinner {
-		return -1
+		return Tie
 	}
 	return g.currentPlayer
 }
