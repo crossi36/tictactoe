@@ -76,7 +76,7 @@ func NewGame() *Game {
 
 // CurrentPlayer returns Player1 or Player2, depending on who has to play next.
 func (g Game) CurrentPlayer() Player {
-	return Player(g.currentPlayer)
+	return g.currentPlayer
 }
 
 // Winner returns Player 1 or Player 2 depending on who has won or Tie if there
@@ -85,7 +85,7 @@ func (g Game) Winner() Player {
 	if !g.hasWinner {
 		return Nobody
 	}
-	return Player(g.currentPlayer)
+	return g.currentPlayer
 }
 
 // Over returns true if the game is finished and false otherwise.
