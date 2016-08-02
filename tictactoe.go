@@ -10,7 +10,11 @@ const (
 	standardFieldValue = dimension + 1
 )
 
-// Possible return values for CurrentPlayer() and Winner().
+// Player is the type returned by CurrentPlayer() and Winner(). Its value is either
+// Player1, Player2 or Tie.
+type Player int
+
+// Possible values of the Player type.
 const (
 	Tie = iota - 1
 	Player1
@@ -63,17 +67,17 @@ func NewGame() *Game {
 }
 
 // CurrentPlayer returns Player1 or Player2, depending on who has to play next.
-func (g Game) CurrentPlayer() int {
-	return g.currentPlayer
+func (g Game) CurrentPlayer() Player {
+	return Player(g.currentPlayer)
 }
 
 // Winner returns Player 1 or Player 2 depending on who has won or Tie if there
 // is no winner (yet).
-func (g Game) Winner() int {
+func (g Game) Winner() Player {
 	if !g.hasWinner {
 		return Tie
 	}
-	return g.currentPlayer
+	return Player(g.currentPlayer)
 }
 
 // Over returns true if the game is finished and false otherwise.
