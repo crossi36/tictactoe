@@ -16,7 +16,7 @@ type Player int
 
 // Possible values of the Player type.
 const (
-	Tie = iota - 1
+	Nobody = iota - 1
 	Player1
 	Player2
 )
@@ -75,7 +75,7 @@ func (g Game) CurrentPlayer() Player {
 // is no winner (yet).
 func (g Game) Winner() Player {
 	if !g.hasWinner {
-		return Tie
+		return Nobody
 	}
 	return Player(g.currentPlayer)
 }
