@@ -14,6 +14,17 @@ const (
 // Player1, Player2 or Tie.
 type Player int
 
+func (p Player) String() string {
+	switch p {
+	case 0:
+		return "X"
+	case 1:
+		return "O"
+	default:
+		return " "
+	}
+}
+
 // Possible values of the Player type.
 const (
 	Nobody = iota - 1
@@ -24,8 +35,8 @@ const (
 // Game represents a game of Tic-Tac-Toe. Obtain it by invoking the factory function
 // NewGame().
 type Game struct {
-	board         [][]int
-	currentPlayer int
+	board         []Player
+	currentPlayer Player
 	moveCount     int
 	gameOver      bool
 	hasWinner     bool
@@ -33,18 +44,18 @@ type Game struct {
 
 func (g Game) String() string {
 	var result bytes.Buffer
-	for i := 0; i < dimension; i++ {
-		for j := 0; j < dimension; j++ {
-			result.WriteString(fmt.Sprintf(" %s ", mapValue(g.board[i][j])))
-			if j < dimension-1 {
-				result.WriteString("|")
-			}
+	for i, player := range g.board {
+		result.WriteString(fmt.Sprintf(" %s ", player))
+		if (i+1)%dimension != 0 {
+			result.WriteString("|")
+			continue
 		}
+
 		result.WriteString("\n")
-		if i < dimension-1 {
-			for j := 0; j < dimension; j++ {
+		if i != len(g.board)-1 {
+			for j := 1; j < dimension+1; j++ {
 				result.WriteString("---")
-				if j < dimension-1 {
+				if j%dimension != 0 {
 					result.WriteString("+")
 				}
 			}
@@ -56,12 +67,9 @@ func (g Game) String() string {
 
 // NewGame is a factory function for a new game of Tic-Tac-Toe.
 func NewGame() *Game {
-	b := make([][]int, dimension)
-	for i := 0; i < dimension; i++ {
-		b[i] = make([]int, dimension)
-		for j := 0; j < dimension; j++ {
-			b[i][j] = standardFieldValue
-		}
+	b := make([]Player, dimension*dimension)
+	for i := range b {
+		b[i] = standardFieldValue
 	}
 	return &Game{board: b}
 }
@@ -91,14 +99,14 @@ func (g Game) Over() bool {
 func (g *Game) Play(x, y int) error {
 	switch {
 	case g.gameOver:
-		return fmt.Errorf("Game is already over")
+		return fmt.Errorf("game is already over")
 	case x < 0 || x > dimension-1 || y < 0 || y > dimension-1:
-		return fmt.Errorf("Invalid coordinates")
-	case g.board[y][x] != standardFieldValue:
-		return fmt.Errorf("Field already marked")
+		return fmt.Errorf("invalid coordinates")
+	case g.board[index(x, y)] != standardFieldValue:
+		return fmt.Errorf("field already marked")
 	}
 
-	g.board[y][x] = g.currentPlayer
+	g.board[index(x, y)] = g.currentPlayer
 	g.moveCount++
 
 	g.checkStatus(x, y)
@@ -117,12 +125,12 @@ func (g *Game) checkStatus(x, y int) {
 	}
 
 	winCase := dimension * g.currentPlayer
-	var row, col, dia, rdia int
+	var row, col, dia, rdia Player
 	for i := 0; i < dimension; i++ {
-		row += g.board[y][i]
-		col += g.board[i][x]
-		dia += g.board[i][i]
-		rdia += g.board[i][dimension-(i+1)]
+		row += g.board[index(i, y)]
+		col += g.board[index(x, i)]
+		dia += g.board[index(i, i)]
+		rdia += g.board[index(dimension-(i+1), i)]
 	}
 
 	if checkFor(winCase, row, col, dia, rdia) {
@@ -131,30 +139,21 @@ func (g *Game) checkStatus(x, y int) {
 	}
 }
 
-// FieldValue returns the token of the user occupying the field or empty string
-// if it is empty.
-func (g Game) FieldValue(x, y int) string {
-	return mapValue(g.board[y][x])
-}
-
-/* Helper functions */
-
-func mapValue(x int) string {
-	switch x {
-	case 0:
-		return "X"
-	case 1:
-		return "O"
-	default:
-		return " "
-	}
-}
-
-func checkFor(value int, items ...int) bool {
+func checkFor(value Player, items ...Player) bool {
 	for _, item := range items {
 		if value == item {
 			return true
 		}
 	}
 	return false
+}
+
+// FieldValue returns the token of the user occupying the field or empty string
+// if it is empty.
+func (g Game) FieldValue(x, y int) string {
+	return g.board[index(x, y)].String()
+}
+
+func index(x, y int) int {
+	return x + dimension*y
 }

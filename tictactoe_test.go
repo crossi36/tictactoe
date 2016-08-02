@@ -29,13 +29,13 @@ func BenchmarkString(b *testing.B) {
 
 func TestNewGame(t *testing.T) {
 	game := NewGame()
-	if len(game.board) != 3 {
-		t.Errorf("Expected field height 3, got: %v", len(game.board))
+	if len(game.board) != dimension*dimension {
+		t.Errorf("Expected board size %v, got: %v", dimension*dimension, len(game.board))
 	}
 
-	for _, fields := range game.board {
-		if len(fields) != 3 {
-			t.Errorf("Expected field width 3, got: %v", len(fields))
+	for _, field := range game.board {
+		if field != standardFieldValue {
+			t.Errorf("Expected field with value %v, got: %v", standardFieldValue, field)
 		}
 	}
 }
@@ -101,9 +101,9 @@ func TestOver(t *testing.T) {
 
 func TestPlay(t *testing.T) {
 	game := NewGame()
-	backup := copySliceOfSliceOfInt(game.board)
+	backup := copySliceOfPlayer(game.board)
 	game.Play(0, 0)
-	if testEqualitySlicesOfSliceOfInt(backup, game.board) {
+	if testEqualitySlicesOfPlayer(backup, game.board) {
 		t.Error("Play() does not change the pitch")
 	}
 
@@ -228,9 +228,9 @@ func TestGameEnded(t *testing.T) {
 	game.Play(1, 1)
 	game.Play(2, 0)
 
-	backup := copySliceOfSliceOfInt(game.board)
+	backup := copySliceOfPlayer(game.board)
 	game.Play(2, 2)
-	if !testEqualitySlicesOfSliceOfInt(backup, game.board) {
+	if !testEqualitySlicesOfPlayer(backup, game.board) {
 		t.Error("Play() ignores GameOver flag")
 	}
 }
@@ -249,25 +249,19 @@ func TestFieldValue(t *testing.T) {
 
 /* Helper functions for easier checking/copying of slice of slices */
 
-func testEqualitySlicesOfSliceOfInt(a, b [][]int) bool {
+func testEqualitySlicesOfPlayer(a, b []Player) bool {
 	for i := range a {
-		for j := range a[i] {
-			if a[i][j] != b[i][j] {
-				return false
-			}
+		if a[i] != b[i] {
+			return false
 		}
 	}
 	return true
 }
 
-func copySliceOfSliceOfInt(in [][]int) [][]int {
-	out := [][]int{}
-	for i := range in {
-		temp := []int{}
-		for j := range in[i] {
-			temp = append(temp, in[i][j])
-		}
-		out = append(out, temp)
+func copySliceOfPlayer(in []Player) []Player {
+	out := []Player{}
+	for _, i := range in {
+		out = append(out, i)
 	}
 	return out
 }
