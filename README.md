@@ -40,10 +40,10 @@ The game assumes the following coordinates for the fields of your board:
 ![Imgur](http://i.imgur.com/gszGTMo.png)
 
 As soon as you exit the loop it is time to tell your user who has won. You can retrieve the winner with the `Winner()`
-method of your `Game` object. `Winner()` either returns the player ID (`0` or `1`) or `-1` if the game resulted in a draw.
+method of your `Game` object. `Winner()` either returns the player ID (`0` or `1`) or `Nobody` if the game resulted in a draw.
 ```
 switch game.Winner() {
-case -1:
+case tictactoe.Nobody:
 	fmt.Println("The game resulted in a draw!")
 default:
 	fmt.Println("Player", game.Winner()+1, "won!")
