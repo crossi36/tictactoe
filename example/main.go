@@ -17,7 +17,7 @@ func main() {
 	fmt.Println("Tic-Tac-Toe")
 	for !game.Over() {
 		fmt.Println(game)
-		fmt.Println("It's the turn of player", game.CurrentPlayer()+1)
+		fmt.Println("It's the turn of player", game.CurrentPlayer())
 		fmt.Println("Enter the coordinates like so: x,y")
 
 		input, _ := reader.ReadString('\n')
@@ -36,6 +36,6 @@ func main() {
 	case tictactoe.Nobody:
 		fmt.Println("The game resulted in a draw!")
 	default:
-		fmt.Println("Player", game.Winner()+1, "won!")
+		fmt.Println("Player", game.Winner(), "won!")
 	}
 }
