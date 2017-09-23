@@ -15,7 +15,7 @@ func main() {
 
 Next, you will go into a loop, which you will exit as soon as `game.Over()` returns `true`. In this loop you handle the
 inputs of your user, which will give you the x and y coordinates of the field the user wants to mark. You can get the
-player ID (`0` or `1`) of the player who has to make the next move with the `CurrentPlayer()` method of your `Game`
+player ID (`Player1` or `Player2`) of the player who has to make the next move with the `CurrentPlayer()` method of your `Game`
 object.
 ```
 var x, y int
