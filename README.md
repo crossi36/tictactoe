@@ -20,7 +20,7 @@ object.
 ```
 var x, y int
 for !game.Over() {
-	fmt.Println("Player", game.CurrentPlayer()+1, "has to play")
+	fmt.Println("Player", game.CurrentPlayer(), "has to play")
 	// handle input of the user which will result in x, y being filled
 ```
 
@@ -30,7 +30,7 @@ all fields are marked), or the field is already marked by one of the players.
 ```
 	err := game.Play(x,y)
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Println(err)
 	}
 }
 ```
@@ -40,13 +40,13 @@ The game assumes the following coordinates for the fields of your board:
 ![Imgur](http://i.imgur.com/gszGTMo.png)
 
 As soon as you exit the loop it is time to tell your user who has won. You can retrieve the winner with the `Winner()`
-method of your `Game` object. `Winner()` either returns the player ID (`0` or `1`) or `-1` if the game resulted in a draw.
+method of your `Game` object. `Winner()` either returns the player ID (`Player1` or `Player2`) or `Nobody` if the game resulted in a draw.
 ```
 switch game.Winner() {
-case -1:
+case tictactoe.Nobody:
 	fmt.Println("The game resulted in a draw!")
 default:
-	fmt.Println("Player", game.Winner()+1, "won!")
+	fmt.Println("Player", game.Winner(), "won!")
 }
 ```
 
