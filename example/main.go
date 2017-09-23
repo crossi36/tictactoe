@@ -28,7 +28,7 @@ func main() {
 
 		err := game.Play(x, y)
 		if err != nil {
-			fmt.Println(err.Error())
+			fmt.Println(err)
 		}
 	}
 	fmt.Println(game)
