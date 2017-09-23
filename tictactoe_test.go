@@ -63,7 +63,7 @@ func TestWinner(t *testing.T) {
 	game.Play(1, 1)
 	game.Play(2, 0)
 	winner := game.Winner()
-	if winner != 0 {
+	if winner != Player1 {
 		t.Error("Winner() returns wrong player")
 	}
 
@@ -78,7 +78,7 @@ func TestWinner(t *testing.T) {
 	game.Play(2, 0)
 	game.Play(2, 1)
 	winner = game.Winner()
-	if winner != -1 {
+	if winner != Nobody {
 		t.Error("Winner() wrongly returns a player")
 	}
 }
@@ -144,7 +144,7 @@ func TestGameIsWon(t *testing.T) {
 	if !game.hasWinner {
 		t.Error("Play() does not recognize a winning move")
 	}
-	if game.hasWinner && game.Winner() != 0 {
+	if game.hasWinner && game.Winner() != Player1 {
 		t.Error("Play() announces wrong player as winner")
 	}
 
@@ -161,7 +161,7 @@ func TestGameIsWon(t *testing.T) {
 	if !game.hasWinner {
 		t.Error("Play() does not recognize a winning move")
 	}
-	if game.hasWinner && game.Winner() != 0 {
+	if game.hasWinner && game.Winner() != Player1 {
 		t.Error("Play() announces wrong player as winner")
 	}
 
@@ -179,7 +179,7 @@ func TestGameIsWon(t *testing.T) {
 	if !game.hasWinner {
 		t.Error("Play() does not recognize a winning move")
 	}
-	if game.hasWinner && game.Winner() != 0 {
+	if game.hasWinner && game.Winner() != Player1 {
 		t.Error("Play() announces wrong player as winner")
 	}
 
@@ -197,7 +197,7 @@ func TestGameIsWon(t *testing.T) {
 	if !game.hasWinner {
 		t.Error("Play() does not recognize a winning move")
 	}
-	if game.hasWinner && game.Winner() != 0 {
+	if game.hasWinner && game.Winner() != Player1 {
 		t.Error("Play() announces wrong player as winner")
 	}
 
@@ -237,13 +237,13 @@ func TestGameEnded(t *testing.T) {
 
 func TestFieldValue(t *testing.T) {
 	game := NewGame()
-	if game.FieldValue(1, 0) != " " {
+	if game.FieldValue(1, 0) != Nobody {
 		t.Error("FieldValue() returns player token for empty field")
 	}
 
 	game.Play(1, 0)
-	if v := game.FieldValue(1, 0); v != "X" {
-		t.Errorf("FieldValue() returns %s, expected: X", v)
+	if v := game.FieldValue(1, 0); v != Player1 {
+		t.Errorf("FieldValue() returns %#v, expected: Player1", v)
 	}
 }
 

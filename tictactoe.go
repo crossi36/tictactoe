@@ -16,9 +16,9 @@ type Player int
 
 func (p Player) String() string {
 	switch p {
-	case 0:
+	case Player1:
 		return "X"
-	case 1:
+	case Player2:
 		return "O"
 	default:
 		return " "
@@ -27,8 +27,8 @@ func (p Player) String() string {
 
 // Possible values of the Player type.
 const (
-	Nobody = iota - 1
-	Player1
+	Nobody  = standardFieldValue
+	Player1 = iota - 1
 	Player2
 )
 
@@ -150,8 +150,8 @@ func checkFor(value Player, items ...Player) bool {
 
 // FieldValue returns the token of the user occupying the field or empty string
 // if it is empty.
-func (g Game) FieldValue(x, y int) string {
-	return g.board[index(x, y)].String()
+func (g Game) FieldValue(x, y int) Player {
+	return g.board[index(x, y)]
 }
 
 func index(x, y int) int {
