@@ -5,9 +5,12 @@ import (
 	"fmt"
 )
 
+// Possible values of the Player type.
 const (
-	dimension          = 3
-	standardFieldValue = dimension + 1
+	dimension = 3
+	Nobody    = dimension + 1
+	Player1   = 0
+	Player2   = 1
 )
 
 // Player is the type returned by CurrentPlayer() and Winner(). Its value is either
@@ -24,13 +27,6 @@ func (p Player) String() string {
 		return " "
 	}
 }
-
-// Possible values of the Player type.
-const (
-	Nobody  = standardFieldValue
-	Player1 = 0
-	Player2 = 1
-)
 
 // Game represents a game of Tic-Tac-Toe. Obtain it by invoking the factory function
 // NewGame().
@@ -69,7 +65,7 @@ func (g Game) String() string {
 func NewGame() *Game {
 	b := make([]Player, dimension*dimension)
 	for i := range b {
-		b[i] = standardFieldValue
+		b[i] = Nobody
 	}
 	return &Game{board: b}
 }
@@ -102,7 +98,7 @@ func (g *Game) Play(x, y int) error {
 		return fmt.Errorf("game is already over")
 	case x < 0 || x > dimension-1 || y < 0 || y > dimension-1:
 		return fmt.Errorf("invalid coordinates")
-	case g.board[index(x, y)] != standardFieldValue:
+	case g.board[index(x, y)] != Nobody:
 		return fmt.Errorf("field already marked")
 	}
 

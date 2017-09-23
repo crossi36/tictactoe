@@ -34,8 +34,8 @@ func TestNewGame(t *testing.T) {
 	}
 
 	for _, field := range game.board {
-		if field != standardFieldValue {
-			t.Errorf("Expected field with value %v, got: %v", standardFieldValue, field)
+		if field != Nobody {
+			t.Errorf("Expected field with value %v, got: %v", Nobody, field)
 		}
 	}
 }
