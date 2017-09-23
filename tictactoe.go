@@ -28,8 +28,8 @@ func (p Player) String() string {
 // Possible values of the Player type.
 const (
 	Nobody  = standardFieldValue
-	Player1 = iota - 1
-	Player2
+	Player1 = 0
+	Player2 = 1
 )
 
 // Game represents a game of Tic-Tac-Toe. Obtain it by invoking the factory function
