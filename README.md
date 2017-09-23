@@ -52,13 +52,6 @@ default:
 
 A basic implementation of this usage can be found in the example directory.
 
-## Benchmark
-```
-BenchmarkString-4         300000              4334 ns/op
-BenchmarkNewGame-4      10000000               118 ns/op
-BenchmarkPlay-4         10000000               154 ns/op
-```
-
 ## License
 
 Distributed under the MIT license. See the [LICENSE](https://github.com/crossi36/tictactoe/blob/master/LICENSE.md) file for details.
